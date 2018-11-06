@@ -37,6 +37,8 @@
  */
 
 namespace local_autogroup;
+defined('MOODLE_INTERNAL') || die();
+
 use settings_navigation;
 use context;
 use navigation_node;
@@ -53,7 +55,7 @@ define('SORT_MODULE_DIR', $CFG->dirroot.'/local/autogroup/classes/sort_module/')
  * @throws \Exception
  * @throws \dml_exception
  */
-function plugin_is_enabled(){
+function plugin_is_enabled() {
     $config = get_config('local_autogroup');
     return isset($config->enabled) && $config->enabled;
 }
@@ -63,21 +65,20 @@ function plugin_is_enabled(){
  *
  * @return array
  */
-function get_sort_module_list(){
+function get_sort_module_list() {
     global $CFG;
 
     $list = array();
-
     $files = scandir(SORT_MODULE_DIR);
 
-    foreach($files as $file){
-        if(strstr($file, '.php')){
+    foreach ($files as $file) {
+        if (strstr($file, '.php')) {
             include_once(SORT_MODULE_DIR . $file);
 
-            $classname = str_replace('.php','',$file);
+            $classname = str_replace('.php', '', $file);
             $fullname = 'local_autogroup\\sort_module\\'.$classname;
 
-            if(class_exists($fullname)){
+            if (class_exists($fullname)) {
                 $list[$classname] = sanitise_sort_module_name($classname);
             }
         }
@@ -86,10 +87,10 @@ function get_sort_module_list(){
     return $list;
 }
 
-function sanitise_sort_module_name($name = ''){
+function sanitise_sort_module_name($name = '') {
 
-    // for when we are passed the full name
-    $name = explode('\\',$name);
+    // For when we are passed the full name.
+    $name = explode('\\', $name);
     $name = array_pop($name);
     $stringkey = 'sort_module:'.$name;
     if (get_string_manager()->string_exists($stringkey, 'local_autogroup')) {
@@ -99,8 +100,7 @@ function sanitise_sort_module_name($name = ''){
     $name = ucfirst($name);
     return $name;
 }
-function amend_settings_structure(settings_navigation $settingsnav, context $context)
-{
+function amend_settings_structure(settings_navigation $settingsnav, context $context) {
     global $PAGE, $SITE;
 
     $course = $PAGE->course;
@@ -124,13 +124,13 @@ function amend_settings_structure(settings_navigation $settingsnav, context $con
                 );
 
                 $groupparentnode->type = navigation_node::TYPE_UNKNOWN;
-                $groupparentnode->url = NULL;
-                $groupparentnode->action = NULL;
+                $groupparentnode->url = null;
+                $groupparentnode->action = null;
                 $groupparentnode->key = 'groupsparent';
 
                 $groupparentnode->add_node($groupnode);
 
-                // now add new link for autogroups
+                // Now add new link for autogroups.
                 $url = new moodle_url('/local/autogroup/manage.php', array('courseid' => $course->id));
 
                 $linknode = $groupparentnode->add(
@@ -142,7 +142,7 @@ function amend_settings_structure(settings_navigation $settingsnav, context $con
                     new pix_icon('i/withsubcat', '')
                 );
 
-                // make the node active if we are viewing its page
+                // Make the node active if we are viewing its page.
                 if ($PAGE->has_set_url() && strstr($PAGE->url, 'local/autogroup/')) {
                     $linknode->make_active();
                 }

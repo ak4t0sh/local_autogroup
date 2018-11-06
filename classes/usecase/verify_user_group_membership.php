@@ -29,6 +29,7 @@
  */
 
 namespace local_autogroup\usecase;
+defined('MOODLE_INTERNAL') || die();
 
 use local_autogroup\usecase;
 use local_autogroup\domain;
@@ -47,8 +48,7 @@ class verify_user_group_membership extends usecase
      * @param \moodle_database $db
      * @param int $courseid
      */
-    public function __construct($userid, \moodle_database $db, $courseid = 0 )
-    {
+    public function __construct($userid, \moodle_database $db, $courseid = 0) {
         $this->user = new domain\user($userid, $db, $courseid);
         $this->db = $db;
     }
@@ -56,9 +56,8 @@ class verify_user_group_membership extends usecase
     /**
      * @return bool
      */
-    public function __invoke()
-    {
-        if(!\local_autogroup\plugin_is_enabled()){
+    public function __invoke() {
+        if (!\local_autogroup\plugin_is_enabled()) {
             return false;
         }
         return $this->user->verify_user_group_membership($this->db);

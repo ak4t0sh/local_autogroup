@@ -1,5 +1,4 @@
 <?php
-
 defined('MOODLE_INTERNAL') || die();
 
 function xmldb_local_autogroup_upgrade($oldversion) {
@@ -9,14 +8,14 @@ function xmldb_local_autogroup_upgrade($oldversion) {
 
     if ($oldversion < 2016062201) {
 
-        // Convert "Strict enforcement" settings to new toggles
+        // Convert "Strict enforcement" settings to new toggles.
         $pluginconfig = get_config('local_autogroup');
-        if($pluginconfig->strict){
+        if ($pluginconfig->strict) {
             set_config('listenforgroupchanges', true, 'local_autogroup');
             set_config('listenforgroupmembership', true, 'local_autogroup');
         }
 
-        // savepoint reached.
+        // Savepoint reached.
         upgrade_plugin_savepoint(true, 2016062201, 'local', 'autogroup');
     }
     return true;

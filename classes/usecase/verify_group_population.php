@@ -29,6 +29,7 @@
  */
 
 namespace local_autogroup\usecase;
+defined('MOODLE_INTERNAL') || die();
 
 use local_autogroup\usecase;
 use local_autogroup\domain;
@@ -45,12 +46,11 @@ class verify_group_population extends usecase
      * @param int $groupid
      * @param \moodle_database $db
      */
-    public function __construct($groupid, \moodle_database $db, \moodle_page $page)
-    {
+    public function __construct($groupid, \moodle_database $db, \moodle_page $page) {
         $this->group = new domain\group($groupid, $db);
 
-        //if we are viewing the group members we should redirect to safety
-        if($page->has_set_url() && strstr($page->url, 'group/members.php?group=' . $groupid)) {
+        // If we are viewing the group members we should redirect to safety.
+        if ($page->has_set_url() && strstr($page->url, 'group/members.php?group=' . $groupid)) {
             $this->redirect = true;
         }
     }
@@ -58,9 +58,8 @@ class verify_group_population extends usecase
     /**
      * @return void
      */
-    public function __invoke()
-    {
-        if(!\local_autogroup\plugin_is_enabled()){
+    public function __invoke() {
+        if (!\local_autogroup\plugin_is_enabled()) {
             return;
         }
 
@@ -69,8 +68,8 @@ class verify_group_population extends usecase
             $removed = $this->group->remove();
         }
 
-        if($removed && $this->redirect){
-            $url = new \moodle_url('/group/index.php',array('id'=>$this->group->courseid));
+        if ($removed && $this->redirect) {
+            $url = new \moodle_url('/group/index.php', ['id' => $this->group->courseid]);
             \redirect($url);
         }
     }

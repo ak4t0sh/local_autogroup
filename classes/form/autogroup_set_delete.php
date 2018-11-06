@@ -29,6 +29,7 @@
  */
 
 namespace local_autogroup\form;
+defined('MOODLE_INTERNAL') || die();
 
 use local_autogroup\domain;
 use local_autogroup\form;
@@ -74,17 +75,17 @@ class autogroup_set_delete extends form {
         return parent::get_data();
     }
 
-    private function add_dialogue(){
+    private function add_dialogue() {
         $mform = $this->_form;
 
         $mform->addElement('header', 'delete', get_string('delete'));
 
         $html = html_writer::tag('p', get_string('confirmdelete', 'local_autogroup'));
-        $mform->addElement('html',$html);
+        $mform->addElement('html', $html);
 
-        if($this->_customdata->exists()) {
-            //offer to preserve existing groups
-            $mform->addElement('selectyesno', 'cleanupold', get_string('cleanupold','local_autogroup'));
+        if ($this->_customdata->exists()) {
+            // Offer to preserve existing groups.
+            $mform->addElement('selectyesno', 'cleanupold', get_string('cleanupold', 'local_autogroup'));
             $mform->setDefault('cleanupold', 1);
         }
 

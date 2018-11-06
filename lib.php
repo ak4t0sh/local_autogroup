@@ -35,10 +35,10 @@
  * Each of these functions are under the global namespace, so each
  * function name should being with "local_autogroup" to prevent conflicts
  */
+defined('MOODLE_INTERNAL') || die();
+require_once(__DIR__ . '/locallib.php');
 
-include_once(__DIR__ . '/locallib.php');
-
-if($CFG->branch == '27') {
+if ($CFG->branch == '27') {
     /**
      * Generates the course settings navigation for Moodle 27
      *
@@ -47,8 +47,7 @@ if($CFG->branch == '27') {
      * @return bool
      * @throws coding_exception
      */
-    function local_autogroup_extends_settings_navigation(settings_navigation $settingsnav, context $context)
-    {
+    function local_autogroup_extends_settings_navigation(settings_navigation $settingsnav, context $context) {
         if (!local_autogroup\plugin_is_enabled()) {
             return false;
         }
@@ -57,9 +56,7 @@ if($CFG->branch == '27') {
 
         return true;
     }
-}
-
-else {
+} else {
     /**
      * Generates the course settings navigation for Moodle 28 and higher
      *
@@ -68,8 +65,7 @@ else {
      * @return bool
      * @throws coding_exception
      */
-    function local_autogroup_extend_settings_navigation(settings_navigation $settingsnav, context $context)
-    {
+    function local_autogroup_extend_settings_navigation(settings_navigation $settingsnav, context $context) {
         if (!local_autogroup\plugin_is_enabled()) {
             return false;
         }

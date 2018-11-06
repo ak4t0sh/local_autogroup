@@ -118,7 +118,7 @@ $observers = array(
         'internal'    => true,
         'priority'    => 0,
     ),
-    
+
     array(
         'eventname'   => '\totara_core\event\position_updated',
         'callback'    => '\local_autogroup\event_handler::position_updated',

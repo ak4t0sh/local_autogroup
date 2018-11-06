@@ -29,6 +29,7 @@
  */
 
 namespace local_autogroup\exception;
+defined('MOODLE_INTERNAL') || die();
 
 use local_autogroup\exception;
 

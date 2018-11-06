@@ -29,6 +29,7 @@
  */
 
 namespace local_autogroup;
+defined('MOODLE_INTERNAL') || die();
 
 use moodleform;
 

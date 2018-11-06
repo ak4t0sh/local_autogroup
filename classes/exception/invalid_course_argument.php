@@ -29,6 +29,7 @@
  */
 
 namespace local_autogroup\exception;
+defined('MOODLE_INTERNAL') || die();
 
 class invalid_course_argument extends invalid_argument {
     public function __construct($id, $link = '', $debuginfo = null) {
