@@ -108,7 +108,7 @@ class local_autogroup_renderer extends plugin_renderer_base
         $row [] = $groupset->get_group_count();
 
         // get the eligible roles
-        $roles = $groupset->get_eligible_roles();
+        $roles = array_intersect($groupset->get_eligible_roles(), array_keys(get_all_roles()));
         $roles = role_fix_names($roles, null, ROLENAME_ORIGINAL);
         $roletext = implode(', ',$roles);
         $row [] = $roletext;
